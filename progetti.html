@@ -9,7 +9,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 :root{ --navy:#0B2E4F; --navy-deep:#082238; --gold:#C9A227; --gold-soft:#E9DBA6; --ivory:#F7F3EA; --ink:#1B2733; color-scheme:light; }
 *{box-sizing:border-box;}
-html{ scroll-snap-type:y proximity; scroll-behavior:smooth; }
 body{margin:0;background:var(--navy-deep);color:#fff;font-family:'Inter',sans-serif;}
 
 .topbar{ position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:space-between; align-items:center; padding:18px 32px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#D7C68B; background:linear-gradient(180deg, rgba(8,34,56,0.9), transparent); }
@@ -17,41 +16,21 @@ body{margin:0;background:var(--navy-deep);color:#fff;font-family:'Inter',sans-se
 .topbar a span{ color:var(--gold-soft); font-style:normal; }
 .topbar .back{ font-family:'IBM Plex Mono',monospace; font-style:normal; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#D7C68B; text-decoration:none; }
 
-.intro{ min-height:56vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:90px 24px 40px; }
+.intro{ min-height:46vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:90px 24px 30px; }
 .intro .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:18px; }
-.intro h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.2rem,6vw,3.6rem); font-style:italic; margin:0 0 18px; }
+.intro h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.2rem,6vw,3.2rem); font-style:italic; margin:0 0 14px; }
 .intro p{ max-width:56ch; color:#C6D3DE; font-size:1.02rem; margin:0; }
 
-.panel{
-  position:relative; height:88vh; scroll-snap-align:start;
-  display:flex; align-items:flex-end;
-  opacity:0; animation: rise .7s ease forwards; animation-delay: calc(var(--i)*0.05s);
-  overflow:hidden;
-}
+.panel{ position:relative; height:70vh; display:flex; align-items:flex-end; overflow:hidden; opacity:0; animation: rise .6s ease forwards; animation-delay: calc(var(--i)*0.05s); }
 @keyframes rise{ to{opacity:1;} }
-
 .panel-photo{ position:absolute; inset:0; }
-.slide{
-  position:absolute; inset:0; opacity:0;
-  display:flex; align-items:center; justify-content:center;
-  animation: crossfade 9s ease-in-out infinite;
-}
-.slide span{
-  font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
-  color:rgba(255,255,255,0.45);
-}
-@keyframes crossfade{
-  0%   { opacity:0; }
-  6%   { opacity:1; }
-  30%  { opacity:1; }
-  36%  { opacity:0; }
-  100% { opacity:0; }
-}
-
+.slide{ position:absolute; inset:0; opacity:0; display:flex; align-items:center; justify-content:center; animation: crossfade 9s ease-in-out infinite; }
+.slide span{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.45); }
+@keyframes crossfade{ 0%{opacity:0;} 6%{opacity:1;} 30%{opacity:1;} 36%{opacity:0;} 100%{opacity:0;} }
 .panel-scrim{ position:absolute; inset:0; background: linear-gradient(180deg, rgba(8,34,56,0.05) 40%, rgba(8,34,56,0.92) 100%); pointer-events:none; }
-.panel-caption{ position:relative; z-index:2; padding: 50px 48px; max-width:760px; }
+.panel-caption{ position:relative; z-index:2; padding: 40px 40px; max-width:700px; }
 .panel-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:10px; }
-.panel h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2rem,5vw,3.2rem); margin:0; }
+.panel h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(1.8rem,4.5vw,2.8rem); margin:0; }
 
 footer{ text-align:center; padding:40px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7C8FA0; }
 footer .credit{ display:block; margin-top:8px; font-size:9px; color:#4F6072; text-transform:none; letter-spacing:0.04em; }
@@ -113,7 +92,6 @@ footer .credit{ display:block; margin-top:8px; font-size:9px; color:#4F6072; tex
 
 <footer>
   <div>Il manuale del nuovo arrivato - Navale &amp; Offshore</div>
-  <div class="credit">Made by Samuele Bolis &amp; Aurora Lazzaro</div>
 </footer>
 </body>
 </html>
