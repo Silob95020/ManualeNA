@@ -69,25 +69,62 @@ a{ color:inherit; }
   background:#fff; border: 1px solid var(--line); border-radius: 4px; margin-bottom: 10px;
   box-shadow: 0 1px 2px rgba(11,46,79,0.04);
   opacity:0; transform: translateY(10px); animation: rise .5s ease forwards; animation-delay: calc(var(--i) * 0.04s);
-  transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+  transition: box-shadow .2s ease, border-color .2s ease;
 }
 @keyframes rise{ to{ opacity:1; transform:none; } }
-.chapter:hover{ box-shadow: 0 6px 18px rgba(11,46,79,0.12); border-color: var(--gold); transform: translateY(-2px); }
-.chapter:hover .go{ transform: translateX(4px); color: var(--gold); }
-.chapter:hover .chapter-num{ color: var(--gold); }
+.chapter:hover{ box-shadow: 0 6px 18px rgba(11,46,79,0.12); border-color: var(--gold); }
+.chapter.open{ border-color: var(--gold); }
 
-.chapter-head{ display:flex; align-items:center; gap:20px; padding: 18px 22px; text-decoration:none; color:inherit; }
-.chapter-num{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-soft); width:30px; flex-shrink:0; font-weight:500; transition: color .2s ease; }
-.chapter-body{ flex:1; min-width:0; }
+.chapter-row{ display:flex; align-items:center; gap:14px; padding: 14px 16px 14px 14px; }
+.chapter-link{ display:flex; align-items:center; gap:18px; text-decoration:none; color:inherit; flex:1; min-width:0; }
+
+/* targhetta numero, stile placca da cabina incassata */
+.chapter-plaque{
+  display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+  width:40px; height:40px; border-radius:6px;
+  background: linear-gradient(155deg, #f4f0e6, #e6ddc8);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), inset 0 -2px 4px rgba(11,46,79,0.14);
+  font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600; color:var(--navy);
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.chapter.open .chapter-plaque, .chapter-link:hover .chapter-plaque{
+  background: linear-gradient(155deg, var(--gold-soft), #d9bd6e);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.7), inset 0 -2px 4px rgba(110,85,17,0.25);
+}
+
 .chapter-title{ font-family:'Cormorant Garamond',serif; font-size:1.32rem; font-weight:600; display:block; }
-.chapter-subs-wrap{ padding: 0 22px 18px 72px; }
+
+.chapter-toggle{
+  flex-shrink:0; width:34px; height:34px; border-radius:50%; border:1.5px solid var(--line);
+  background:#fff; color:var(--ink-soft); font-size:1.1rem; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition: transform .3s ease, border-color .2s ease, color .2s ease;
+}
+.chapter-toggle:hover{ border-color: var(--gold); color: var(--gold); }
+.chapter.open .chapter-toggle{ transform: rotate(90deg); border-color: var(--gold); color: var(--gold); }
+.chapter-static{ flex-shrink:0; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-soft); font-style:italic; }
+
+/* srotolamento: grid-template-rows 0fr -> 1fr, tecnica moderna per animare verso "auto" */
+.chapter-subs-wrap{
+  display:grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .45s cubic-bezier(0.65,0,0.35,1);
+  padding: 0 16px 0 14px;
+}
+.chapter.open .chapter-subs-wrap{ grid-template-rows: 1fr; }
+.chapter-subs-wrap.always-open{ grid-template-rows: 1fr; }
+.chapter-subs-inner{ overflow:hidden; }
+.chapter-subs-inner-pad{
+  position:relative; margin-left:20px; padding: 4px 0 18px 22px;
+  border-left: 1px solid var(--line);
+}
+.chapter.open .chapter-subs-inner-pad, .always-open .chapter-subs-inner-pad{ border-left-color: var(--gold); }
 .subs{ list-style:none; margin:0; padding:0; font-size:0.85rem; color:var(--ink-soft); line-height:1.7; }
 .subs li{ padding-left:12px; position:relative; }
 .subs li::before{ content:"–"; position:absolute; left:0; color:var(--gold); }
 .subs a{ text-decoration:none; color:var(--ink-soft); transition: color .15s ease; }
 .subs a:hover{ color: var(--navy); text-decoration:underline; text-decoration-color: var(--gold); text-underline-offset:2px; }
-.subs-empty{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); font-style:italic; padding: 0 22px 18px 72px; margin:0; }
-.go{ font-size:1.2rem; color:var(--ink-soft); transition: all .2s ease; flex-shrink:0; }
+.subs-empty{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); font-style:italic; margin:0; }
 
 footer{ text-align:center; padding: 30px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--ink-soft); text-transform:uppercase; }
 footer .credit{ display:block; margin-top:8px; font-size:9px; letter-spacing:0.04em; color: var(--line); text-transform:none; }
@@ -231,151 +268,153 @@ section.sec li{ margin-bottom:6px; }
   <div class="toc-head"><span>Indice</span><span>13 capitoli</span></div>
   
     <div class="chapter" style="--i:0">
-      <a class="chapter-head" href="capitolo-00.html">
-        <span class="chapter-num">00</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-00.html">
+          <span class="chapter-plaque">00</span>
           <span class="chapter-title">La Nave</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-00.html#introduzione">Introduzione</a></li><li><a href="capitolo-00.html#poppa-e-prua">Poppa e Prua</a></li><li><a href="capitolo-00.html#center-line">Center Line</a></li><li><a href="capitolo-00.html#port-e-starboard">Port e Starboard</a></li><li><a href="capitolo-00.html#riferimenti-nello-spazio-modello">Riferimenti nello spazio modello</a></li><li><a href="capitolo-00.html#main-vertical-zone">Main Vertical Zone</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-00.html#introduzione">Introduzione</a></li><li><a href="capitolo-00.html#poppa-e-prua">Poppa e Prua</a></li><li><a href="capitolo-00.html#center-line">Center Line</a></li><li><a href="capitolo-00.html#port-e-starboard">Port e Starboard</a></li><li><a href="capitolo-00.html#riferimenti-nello-spazio-modello">Riferimenti nello spazio modello</a></li><li><a href="capitolo-00.html#main-vertical-zone">Main Vertical Zone</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:1">
-      <a class="chapter-head" href="capitolo-01.html">
-        <span class="chapter-num">01</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-01.html">
+          <span class="chapter-plaque">01</span>
           <span class="chapter-title">Stakeholders</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-01.html#figure-responsabili">Figure responsabili</a></li><li><a href="capitolo-01.html#persone-da-evitare">Persone da evitare</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-01.html#figure-responsabili">Figure responsabili</a></li><li><a href="capitolo-01.html#persone-da-evitare">Persone da evitare</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:2">
-      <a class="chapter-head" href="capitolo-02.html">
-        <span class="chapter-num">02</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-02.html">
+          <span class="chapter-plaque">02</span>
           <span class="chapter-title">Struttura</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-02.html#lamiere">Lamiere</a></li><li><a href="capitolo-02.html#taglio-porte">Taglio porte</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-02.html#lamiere">Lamiere</a></li><li><a href="capitolo-02.html#taglio-porte">Taglio porte</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:3">
-      <a class="chapter-head" href="capitolo-03.html">
-        <span class="chapter-num">03</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-03.html">
+          <span class="chapter-plaque">03</span>
           <span class="chapter-title">Architettonico</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-03.html#classi">Classi</a></li><li><a href="capitolo-03.html#imbonaggi">Imbonaggi</a></li><li><a href="capitolo-03.html#pannelli">Pannelli</a></li><li><a href="capitolo-03.html#bagoline">Bagoline</a></li><li><a href="capitolo-03.html#portelli-d-ispezione">Portelli d'ispezione</a></li><li><a href="capitolo-03.html#precedenza-pannelli">Precedenza pannelli</a></li><li><a href="capitolo-03.html#altezze">Altezze</a></li><li><a href="capitolo-03.html#cielini-e-velette">Cielini e velette</a></li><li><a href="capitolo-03.html#mastre-e-catering">Mastre e catering</a></li><li><a href="capitolo-03.html#ghiotte-e-ombrinali">Ghiotte e ombrinali</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-03.html#classi">Classi</a></li><li><a href="capitolo-03.html#imbonaggi">Imbonaggi</a></li><li><a href="capitolo-03.html#pannelli">Pannelli</a></li><li><a href="capitolo-03.html#bagoline">Bagoline</a></li><li><a href="capitolo-03.html#portelli-d-ispezione">Portelli d'ispezione</a></li><li><a href="capitolo-03.html#precedenza-pannelli">Precedenza pannelli</a></li><li><a href="capitolo-03.html#altezze">Altezze</a></li><li><a href="capitolo-03.html#cielini-e-velette">Cielini e velette</a></li><li><a href="capitolo-03.html#mastre-e-catering">Mastre e catering</a></li><li><a href="capitolo-03.html#ghiotte-e-ombrinali">Ghiotte e ombrinali</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:4">
-      <a class="chapter-head" href="capitolo-04.html">
-        <span class="chapter-num">04</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-04.html">
+          <span class="chapter-plaque">04</span>
           <span class="chapter-title">Porte</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-04.html#tipologie">Tipologie</a></li><li><a href="capitolo-04.html#eventuali-ecc">Eventuali ECC</a></li><li><a href="capitolo-04.html#hatch-di-mantenimento">Hatch di mantenimento</a></li><li><a href="capitolo-04.html#motori">Motori</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-04.html#tipologie">Tipologie</a></li><li><a href="capitolo-04.html#eventuali-ecc">Eventuali ECC</a></li><li><a href="capitolo-04.html#hatch-di-mantenimento">Hatch di mantenimento</a></li><li><a href="capitolo-04.html#motori">Motori</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:5">
-      <a class="chapter-head" href="capitolo-05.html">
-        <span class="chapter-num">05</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-05.html">
+          <span class="chapter-plaque">05</span>
           <span class="chapter-title">Impianti</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-05.html#supply-box">Supply box</a></li><li><a href="capitolo-05.html#plenum">Plenum</a></li><li><a href="capitolo-05.html#tagliatiraggi">Tagliatiraggi</a></li><li><a href="capitolo-05.html#passaggi-aria-asolature">Passaggi aria/asolature</a></li><li><a href="capitolo-05.html#fire-station">Fire station</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-05.html#supply-box">Supply box</a></li><li><a href="capitolo-05.html#plenum">Plenum</a></li><li><a href="capitolo-05.html#tagliatiraggi">Tagliatiraggi</a></li><li><a href="capitolo-05.html#passaggi-aria-asolature">Passaggi aria/asolature</a></li><li><a href="capitolo-05.html#fire-station">Fire station</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:6">
-      <a class="chapter-head" href="capitolo-06.html">
-        <span class="chapter-num">06</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-06.html">
+          <span class="chapter-plaque">06</span>
           <span class="chapter-title">Equipment</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-06.html#les">LES</a></li><li><a href="capitolo-06.html#prese">Prese</a></li><li><a href="capitolo-06.html#pa">PA</a></li><li><a href="capitolo-06.html#smoke-detector">Smoke detector</a></li><li><a href="capitolo-06.html#release-push-button">Release push button</a></li><li><a href="capitolo-06.html#visual-alarm">Visual alarm</a></li><li><a href="capitolo-06.html#led-e-faretti-cut-out">LED e faretti (cut-out)</a></li><li><a href="capitolo-06.html#tabelle-equipment">Tabelle equipment</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-06.html#les">LES</a></li><li><a href="capitolo-06.html#prese">Prese</a></li><li><a href="capitolo-06.html#pa">PA</a></li><li><a href="capitolo-06.html#smoke-detector">Smoke detector</a></li><li><a href="capitolo-06.html#release-push-button">Release push button</a></li><li><a href="capitolo-06.html#visual-alarm">Visual alarm</a></li><li><a href="capitolo-06.html#led-e-faretti-cut-out">LED e faretti (cut-out)</a></li><li><a href="capitolo-06.html#tabelle-equipment">Tabelle equipment</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:7">
-      <a class="chapter-head" href="capitolo-07.html">
-        <span class="chapter-num">07</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-07.html">
+          <span class="chapter-plaque">07</span>
           <span class="chapter-title">Funzionali</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-07.html#tipologie-di-disegno">Tipologie di disegno</a></li><li><a href="capitolo-07.html#come-leggerli">Come leggerli</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-07.html#tipologie-di-disegno">Tipologie di disegno</a></li><li><a href="capitolo-07.html#come-leggerli">Come leggerli</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:8">
-      <a class="chapter-head" href="capitolo-08.html">
-        <span class="chapter-num">08</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-08.html">
+          <span class="chapter-plaque">08</span>
           <span class="chapter-title">PDM e 3D</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><div class="subs-empty">Contenuto in definizione</div></div>
+        </a>
+        <span class="chapter-static">In definizione</span>
+      </div>
+      <div class="chapter-subs-wrap always-open"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><div class="subs-empty">Contenuto in definizione</div></div></div>
+    </div>
     </div>
 
     <div class="chapter" style="--i:9">
-      <a class="chapter-head" href="capitolo-09.html">
-        <span class="chapter-num">09</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-09.html">
+          <span class="chapter-plaque">09</span>
           <span class="chapter-title">Costruttivi</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-09.html#pannelli">Pannelli</a></li><li><a href="capitolo-09.html#telai">Telai</a></li><li><a href="capitolo-09.html#soffitti">Soffitti</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-09.html#pannelli">Pannelli</a></li><li><a href="capitolo-09.html#telai">Telai</a></li><li><a href="capitolo-09.html#soffitti">Soffitti</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:10">
-      <a class="chapter-head" href="capitolo-10.html">
-        <span class="chapter-num">10</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-10.html">
+          <span class="chapter-plaque">10</span>
           <span class="chapter-title">La Buona Progettazione</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-10.html#xrif">Xrif</a></li><li><a href="capitolo-10.html#blocchi">Blocchi</a></li><li><a href="capitolo-10.html#comandi-utili">Comandi utili</a></li><li><a href="capitolo-10.html#cosa-evitare-clip-e-wipeout">Cosa evitare: clip e wipeout</a></li><li><a href="capitolo-10.html#file-lisp-ed-express-tools">File Lisp ed Express Tools</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-10.html#xrif">Xrif</a></li><li><a href="capitolo-10.html#blocchi">Blocchi</a></li><li><a href="capitolo-10.html#comandi-utili">Comandi utili</a></li><li><a href="capitolo-10.html#cosa-evitare-clip-e-wipeout">Cosa evitare: clip e wipeout</a></li><li><a href="capitolo-10.html#file-lisp-ed-express-tools">File Lisp ed Express Tools</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:11">
-      <a class="chapter-head" href="capitolo-11.html">
-        <span class="chapter-num">11</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-11.html">
+          <span class="chapter-plaque">11</span>
           <span class="chapter-title">Amministrazione</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-11.html#foglio-ore">Foglio ore</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-11.html#foglio-ore">Foglio ore</a></li></ul></div></div></div>
     </div>
 
     <div class="chapter" style="--i:12">
-      <a class="chapter-head" href="capitolo-12.html">
-        <span class="chapter-num">12</span>
-        <div class="chapter-body">
+      <div class="chapter-row">
+        <a class="chapter-link" href="capitolo-12.html">
+          <span class="chapter-plaque">12</span>
           <span class="chapter-title">Arighi Team</span>
-        </div>
-        <span class="go">→</span>
-      </a>
-      <div class="chapter-subs-wrap"><ul class="subs"><li><a href="capitolo-12.html#posti-per-l-aperitivo">Posti per l'aperitivo</a></li><li><a href="capitolo-12.html#attivita-extra-lavoro">Attività extra lavoro</a></li><li><a href="capitolo-12.html#compleanni">Compleanni</a></li></ul></div>
+        </a>
+        <button class="chapter-toggle" type="button" aria-expanded="false" aria-label="Mostra sottocapitoli">›</button>
+      </div>
+      <div class="chapter-subs-wrap"><div class="chapter-subs-inner"><div class="chapter-subs-inner-pad"><ul class="subs"><li><a href="capitolo-12.html#posti-per-l-aperitivo">Posti per l'aperitivo</a></li><li><a href="capitolo-12.html#attivita-extra-lavoro">Attività extra lavoro</a></li><li><a href="capitolo-12.html#compleanni">Compleanni</a></li></ul></div></div></div>
     </div>
 </div>
 
 <footer>
   <div>Il manuale del nuovo arrivato - Navale &amp; Offshore</div>
+  <span class="credit">Created by Samuele Bolis e Aurora Lazzaro</span>
 </footer>
 
 <script>
@@ -424,6 +463,14 @@ section.sec li{ margin-bottom:6px; }
     requestAnimationFrame(intro);
   })();
 </script>
-
+<script>
+  document.querySelectorAll('.chapter-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var chapter = btn.closest('.chapter');
+      var isOpen = chapter.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+</script>
 </body>
 </html>
