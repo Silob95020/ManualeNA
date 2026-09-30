@@ -103,8 +103,16 @@ footer .credit{ display:block; margin-top:8px; font-size:9px; letter-spacing:0.0
 section.sec{ margin-bottom: 42px; padding-bottom: 42px; border-bottom: 1px solid var(--line); }
 section.sec:last-child{ border-bottom:none; }
 section.sec h2{
-  font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--navy); letter-spacing:0.06em;
-  margin:0 0 16px; display:flex; align-items:baseline; gap:10px; text-transform:uppercase;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:15px;
+  font-weight:600;
+  color:var(--navy);
+  letter-spacing:0.055em;
+  margin:0 0 22px;
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  text-transform:uppercase;
 }
 section.sec h2 .sec-num{ color: var(--gold); font-weight:600; }
 section.sec p{ margin:0 0 16px; max-width:64ch; font-size:1.02rem; }
@@ -129,6 +137,174 @@ section.sec li{ margin-bottom:6px; }
 }
 .pager a:hover{ background: var(--navy); border-color: var(--navy); color:#fff; }
 
+/* ---------- Didactic components: Capitolo 02 ---------- */
+.chapter-lede{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;
+  line-height:1.45;
+  color:var(--navy);
+  margin:0 0 28px;
+  max-width:62ch;
+}
+.quick-nav{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin:0 0 46px;
+}
+.quick-nav a{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  color:var(--navy);
+  text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.quick-nav a:hover{
+  transform:translateY(-1px);
+  border-color:var(--gold);
+  background:#FFFDF7;
+}
+.quick-nav .qnum{ color:var(--gold); font-weight:600; }
+
+.subhead{
+  font-family:'Inter',sans-serif;
+  font-size:1rem;
+  line-height:1.35;
+  color:var(--navy);
+  margin:24px 0 8px;
+  font-weight:600;
+}
+.info-box, .attention-box{
+  max-width:64ch;
+  margin:20px 0;
+  padding:16px 18px;
+  border-radius:7px;
+  background:#fff;
+  border-left:4px solid var(--gold);
+  box-shadow:0 1px 0 rgba(8,34,56,.03);
+}
+.attention-box{ border-left-color:var(--burgundy); }
+.info-box .box-title, .attention-box .box-title{
+  display:block;
+  margin-bottom:6px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:var(--navy);
+}
+.attention-box .box-title{ color:var(--burgundy); }
+.info-box p, .attention-box p{ margin:0; font-size:.98rem; }
+
+.tech-figure{
+  max-width:64ch;
+  margin:22px 0 24px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fff;
+}
+.tech-figure figcaption{
+  margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  line-height:1.5;
+  color:var(--ink-soft);
+}
+.deck-diagram{ display:grid; gap:0; }
+.deck-ref{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color:var(--navy);
+  padding:7px 9px;
+  border-bottom:1px dashed var(--line);
+}
+.deck-ref.top{ border-bottom:none; border-top:2px solid var(--gold); }
+.deck-plate{
+  background:linear-gradient(90deg,#CBD3D9,#E5E9EC);
+  border:1px solid #AEBAC2;
+  height:34px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px; letter-spacing:.08em; color:#41525F;
+}
+.deck-ref.bottom{ border-top:2px solid var(--navy); border-bottom:none; }
+
+.compare-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  max-width:64ch;
+  margin:18px 0 22px;
+}
+.compare-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:16px;
+}
+.compare-card strong{
+  display:block;
+  color:var(--navy);
+  margin-bottom:6px;
+}
+.compare-card p{ margin:0; font-size:.95rem; }
+
+.axis-diagram{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.axis-card{
+  min-height:110px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:#fff;
+  padding:14px;
+  position:relative;
+  overflow:hidden;
+}
+.axis-card .axis-name{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px; color:var(--navy); font-weight:600;
+}
+.axis-card .axis-line{
+  position:absolute;
+  background:var(--navy);
+  opacity:.75;
+}
+.axis-card.transverse .axis-line{ left:12%; right:12%; height:4px; top:64%; }
+.axis-card.longitudinal .axis-line{ top:34%; bottom:16%; width:4px; left:50%; }
+.axis-card .arrow{
+  position:absolute;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px; color:var(--ink-soft);
+  bottom:10px; left:14px;
+}
+
+.status-note{
+  display:inline-block;
+  margin-left:8px;
+  padding:2px 7px;
+  border-radius:999px;
+  background:var(--gold-soft);
+  color:#6E5511;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:.06em;
+  vertical-align:middle;
+}
+
+@media (max-width:640px){
+  .quick-nav, .compare-grid, .axis-diagram{ grid-template-columns:1fr; }
+}
+
 @media (max-width:640px){
   .topbar{ padding: 14px 20px; }
   .hero{ padding: 36px 20px 0; }
@@ -139,6 +315,7 @@ section.sec li{ margin-bottom:6px; }
 }
 
 </style>
+  <link rel="stylesheet" href="navale.css">
 </head>
 <body>
 
@@ -154,11 +331,164 @@ section.sec li{ margin-bottom:6px; }
 </div>
 
 <div class="content">
-  
-  <div class="placeholder-box">
-    <div class="kicker">Contenuto in arrivo</div>
-    <p>Questo capitolo non è stato ancora caricato. Manda i testi ed è pronto in un attimo, riportati esattamente come li hai scritti tu.</p>
-  </div>
+
+
+  <p class="chapter-lede">
+    Per chi si occupa di allestimenti interni non è necessario conoscere il dimensionamento della struttura navale,
+    ma è fondamentale saper riconoscere gli elementi strutturali principali e capire come questi definiscono lo spazio
+    reale nel quale verrà installato l’allestimento.
+  </p>
+
+  <nav class="quick-nav" aria-label="Indice del capitolo Struttura">
+    <a href="#deck"><span class="qnum">2.1</span> Deck</a>
+    <a href="#fasciame-murata"><span class="qnum">2.2</span> Fasciame / Murata</a>
+    <a href="#bulkhead"><span class="qnum">2.3</span> Bulkhead</a>
+    <a href="#pillars"><span class="qnum">2.4</span> Pillars / Puntelli</a>
+    <a href="#bagli-anguille"><span class="qnum">2.5</span> Bagli e Anguille</a>
+    <a href="#penetrazioni-ponte"><span class="qnum">2.6</span> Penetrazioni a ponte</a>
+    <a href="#taglio-porte"><span class="qnum">2.7</span> Taglio porte</a>
+  </nav>
+
+  <section class="sec" id="deck">
+    <h2><span class="sec-num">2.1</span> Deck</h2>
+    <p>Il <span class="term">Deck</span>, o ponte, è una delle principali strutture orizzontali della nave. È formato da una lamiera sostenuta e irrigidita dalla struttura sottostante e costituisce la base sulla quale vengono successivamente realizzati pavimenti, pareti, arredi e altri elementi dell’allestimento.</p>
+    <p>Quando lavoriamo con disegni e modelli, non basta conoscere la quota del Deck: è importante capire <strong>da quale riferimento viene presa</strong>.</p>
+
+    <h3 class="subhead">Top of Beam — TOB</h3>
+    <p>Se il riferimento è il <span class="term">Top of Beam (TOB)</span>, la quota viene presa prima dello spessore della lamiera del ponte. Lo spessore della <strong>Deck Plate</strong> non è quindi compreso nel valore indicato.</p>
+
+    <h3 class="subhead">Top of Plate — TOP</h3>
+    <p>Se il riferimento è il <span class="term">Top of Plate (TOP)</span>, la quota tiene invece conto anche dello spessore della lamiera del ponte.</p>
+
+    <figure class="tech-figure">
+      <div class="deck-diagram">
+        <div class="deck-ref top"><strong>TOP</strong><span>riferimento con Deck Plate considerata</span></div>
+        <div class="deck-plate">DECK PLATE</div>
+        <div class="deck-ref bottom"><strong>TOB</strong><span>riferimento prima dello spessore lamiera</span></div>
+      </div>
+      <figcaption>Schema concettuale: la differenza tra i due riferimenti è legata allo spessore della Deck Plate.</figcaption>
+    </figure>
+
+    <div class="attention-box">
+      <span class="box-title">Da ricordare</span>
+      <p>Nei disegni funzionali il Deck può essere rappresentato secondo il piano teorico, spesso riferito al TOB, mentre nel modello strutturale del Cantiere viene normalmente rappresentato anche lo spessore della lamiera. Prima di confrontare due quote è quindi necessario verificare il riferimento utilizzato.</p>
+    </div>
+
+    <h3 class="subhead">Taglio ponte — Deck Opening</h3>
+    <p>In corrispondenza di <strong>scale, atri o ambienti a doppia altezza</strong>, il Deck può essere interrotto creando un’apertura, comunemente indicata come <span class="term">taglio ponte</span> o <span class="term">Deck Opening</span>.</p>
+    <p>L’apertura può essere delimitata da travi e altri elementi strutturali che ne definiscono la geometria e l’ingombro effettivo.</p>
+    <p>Il taglio ponte teorico indicato nei disegni del Cantiere o rappresentato nei modelli 3D <strong>non sempre corrisponde perfettamente alla geometria reale costruita a bordo</strong>.</p>
+    <div class="info-box">
+      <span class="box-title">Buona prassi</span>
+      <p>Quando elementi architettonici o di finitura devono seguire con precisione il profilo del taglio ponte, è buona prassi eseguire un rilievo a bordo a scafo realizzato, verificando geometria e ingombri effettivi prima della produzione o dell’installazione.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="fasciame-murata">
+    <h2><span class="sec-num">2.2</span> Fasciame / Murata</h2>
+    <p>Il <span class="term">fasciame</span>, o <span class="term">Shell Plating</span>, è l’insieme delle lamiere che formano il rivestimento esterno dello scafo. Si estende quindi lungo il fondo e sui lati della nave, seguendone la forma.</p>
+    <p>La <span class="term">murata</span> identifica invece la <strong>parte laterale dello scafo</strong>. In modo semplice, può essere considerata come la porzione laterale del fasciame con cui ci confrontiamo maggiormente nella progettazione degli interni.</p>
+    <p>A differenza di una normale parete verticale, la murata segue la forma dello scafo e può essere <strong>inclinata, curva o cambiare progressivamente inclinazione</strong> lungo la nave.</p>
+    <p>Il fasciame è irrigidito mediante elementi strutturali, come <strong>stiffener e frames</strong>, che possono creare ingombri verso l’interno.</p>
+    <div class="info-box">
+      <span class="box-title">Murata e allestimento</span>
+      <p>Tra la struttura e il lining possono trovare spazio isolamento, sottostrutture e impianti. La geometria della murata può inoltre cambiare sensibilmente in funzione della posizione longitudinale e del ponte considerato.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="bulkhead">
+    <h2><span class="sec-num">2.3</span> Bulkhead</h2>
+    <p>La <span class="term">Bulkhead</span>, o paratia, è un elemento verticale della nave che separa e suddivide gli spazi interni. A seconda della funzione e della zona in cui si trova, può presentarsi con configurazioni differenti.</p>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <strong>Bulkhead liscia</strong>
+        <p>È costituita da una lamiera piana, che può essere irrigidita mediante elementi di rinforzo verticali chiamati <strong>stiffener</strong>.</p>
+      </div>
+      <div class="compare-card">
+        <strong>Corrugated Bulkhead</strong>
+        <p>È realizzata con una lamiera sagomata a pieghe. La geometria della lamiera conferisce rigidità e può ridurre o evitare l’uso di stiffener aggiuntivi.</p>
+      </div>
+    </div>
+
+    <p>Gli <strong>stiffener</strong> vengono generalmente saldati su uno dei due lati della paratia e ne aumentano la rigidezza. Il lato sul quale sono presenti può modificare lo spazio effettivamente disponibile vicino alla Bulkhead.</p>
+    <div class="info-box">
+      <span class="box-title">Bulkhead e lining</span>
+      <p>Negli ambienti interni la Bulkhead strutturale non coincide necessariamente con la superficie finita visibile. Davanti alla struttura possono infatti essere installati isolamento, sottostrutture e lining.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="pillars">
+    <h2><span class="sec-num">2.4</span> Pillars / Puntelli</h2>
+    <p>I <span class="term">Pillars</span>, chiamati anche <strong>puntelli</strong>, sono elementi strutturali verticali utilizzati per sostenere i ponti e trasferire i carichi verso la struttura sottostante.</p>
+    <p>Possono avere forme e sezioni differenti, ad esempio <strong>circolari, quadrate o rettangolari</strong>, a seconda della funzione e della zona della nave in cui sono installati.</p>
+    <p>La posizione reale dei puntelli può differire leggermente da quella teorica indicata nei disegni o nei modelli: possono esserci piccoli <strong>disallineamenti in pianta</strong> o leggere <strong>fuori verticalità</strong>.</p>
+    <p>Per questo motivo vengono spesso rivestiti mediante <strong>copripuntelli</strong>, progettati con un adeguato margine di tolleranza per assorbire eventuali differenze di posizione e facilitare l’installazione a bordo.</p>
+    <div class="attention-box">
+      <span class="box-title">Attenzione all’ingombro reale</span>
+      <p>Il cordolo di saldatura in corrispondenza del Deck può aumentare localmente l’ingombro rispetto alla geometria nominale del Pillar. Una tolleranza troppo ridotta del copripuntello può quindi generare interferenze durante il montaggio.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="bagli-anguille">
+    <h2><span class="sec-num">2.5</span> Bagli e Anguille</h2>
+    <p>Al di sotto della lamiera del Deck sono presenti elementi strutturali che sostengono e irrigidiscono il ponte.</p>
+
+    <div class="axis-diagram">
+      <div class="axis-card transverse">
+        <div class="axis-name">BAGLIO</div>
+        <div class="axis-line"></div>
+        <div class="arrow">traverso nave</div>
+      </div>
+      <div class="axis-card longitudinal">
+        <div class="axis-name">ANGUILLA</div>
+        <div class="axis-line"></div>
+        <div class="arrow">lungo nave</div>
+      </div>
+    </div>
+
+    <p><strong>Bagli</strong> — travi disposte in direzione <strong>trasversale</strong>, generalmente in corrispondenza delle ordinate della nave.</p>
+    <p><strong>Anguille</strong> — travi disposte in direzione <strong>longitudinale</strong>, quindi nel senso prua–poppa.</p>
+    <p>Bagli e anguille possono avere dimensioni e altezze differenti in funzione della zona e della configurazione strutturale della nave.</p>
+    <div class="info-box">
+      <span class="box-title">Ingombro sotto Deck</span>
+      <p>Gli elementi di maggiore altezza possono influenzare la quota dei cielini, il passaggio degli impianti e la realizzazione di elementi architettonici. Quando una trave scende al di sotto della quota prevista del cielino può essere necessario prevedere un abbassamento locale o un cassonetto.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="penetrazioni-ponte">
+    <h2><span class="sec-num">2.6</span> Penetrazioni a ponte</h2>
+    <p>Il <strong>Deck</strong> viene attraversato in diversi punti per permettere il passaggio degli impianti tra un ponte e l’altro.</p>
+    <ul>
+      <li><strong>penetrazioni elettriche</strong>, per il passaggio dei cavi;</li>
+      <li><strong>penetrazioni idrauliche e meccaniche</strong>, per il passaggio delle tubazioni;</li>
+      <li>penetrazioni per altri impianti e servizi di bordo.</li>
+    </ul>
+    <p>Una penetrazione non è necessariamente costituita dal solo foro nella lamiera. Possono essere presenti <strong>collari, coaming, manicotti, sistemi di tenuta e cordoli di saldatura</strong>, che aumentano l’ingombro effettivo rispetto alla sola apertura rappresentata in pianta.</p>
+    <p>Particolare attenzione deve essere posta agli elementi che emergono al di sopra del Deck, soprattutto quando si trovano in prossimità di <strong>pareti, arredi, porte o pavimentazioni</strong>.</p>
+
+    <h3 class="subhead">Ombrinali</h3>
+    <p>Gli <span class="term">ombrinali</span>, o <span class="term">scuppers</span>, fanno parte del sistema di drenaggio della nave e permettono di raccogliere e smaltire l’acqua presente sul ponte attraverso apposite aperture e tubazioni.</p>
+    <p>La loro posizione e il relativo ingombro devono essere considerati nella realizzazione delle pavimentazioni e degli elementi di allestimento, evitando di ostacolare il corretto deflusso dell’acqua.</p>
+  </section>
+
+  <section class="sec" id="taglio-porte">
+    <h2><span class="sec-num">2.7</span> Taglio porte</h2>
+    <p>Il <strong>taglio porta</strong>, o <strong>taglio ferro</strong>, è l’apertura realizzata nella <strong>Bulkhead strutturale</strong> per consentire l’installazione della porta.</p>
+    <p>La sua geometria non coincide necessariamente con la luce utile della porta: il taglio deve infatti tenere conto del sistema di installazione, delle tolleranze e degli eventuali elementi metallici previsti attorno all’apertura.</p>
+
+    <h3 class="subhead">Geometria del taglio</h3>
+    <p>Il taglio porta può avere forme differenti. In alcuni casi si presenta come una semplice apertura rettangolare con angoli raccordati; in altri può avere geometrie particolari in corrispondenza degli angoli o della zona inferiore.</p>
+    <p>Tra le configurazioni che si possono incontrare ci sono anche quelle comunemente definite <strong>“orecchie di Topolino”</strong>, caratterizzate da allargamenti locali del taglio.</p>
+
+    <h3 class="subhead">Canotto</h3>
+    <p>In alcune configurazioni può essere previsto un <strong>canotto</strong>, cioè un elemento metallico saldato alla Bulkhead che permette di <strong>spostare il filo di installazione della fire door rispetto al piano della struttura</strong>.</p>
+    <div class="info-box">
+      <span class="box-title">Approfondimento</span>
+      <p>L’argomento verrà approfondito nel <strong>Capitolo 04 – Porte</strong>, dove verranno trattate nel dettaglio le diverse tipologie di porte, le modalità di installazione e le relative interfacce con la struttura.</p>
+    </div>
+  </section>
+
 
   <div class="pager">
     <a href="capitolo-01.html">← Cap. 01 — Stakeholders</a>
